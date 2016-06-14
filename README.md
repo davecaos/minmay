@@ -8,4 +8,4 @@ Minmay is a __naïve__ Erlang library for translating a file extention to MIME t
    <<"image/jpeg">> = minmay:mime_type(<<".mpeg">>).
    
 ```
-![GIF](http://31.media.tumblr.com/27a1fc6ca882304f04dc7aa1c3f63d88/tumblr_n6tdfuc3OW1tn7e6io1_r1_500.gif)
+![GIF](http://1.bp.blogspot.com/-yHRkA0tfIds/T8--B9NF1bI/AAAAAAAAC9k/_XLHURp5BeE/s1600/Lynn+Minmay+-+Shao+Pai+Ron.gif)
