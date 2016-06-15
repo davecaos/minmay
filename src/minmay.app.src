@@ -1,13 +1,13 @@
 {application, minmay,
  [
   {description,
-   "Minmay is a naïve Erlang library for translating a file extention to MIME type or vice versa"},
+   "Minmay is a Erlang library for translating a file extention to MIME type or vice versa"},
   {vsn, "0.0.1"},
   {applications, [kernel, stdlib]},
   {modules, []},
   {registered, []},
   {maintainers, ["davecaos"]},
-  {licenses, ["GNU General Public License v3.0"]},
+  {licenses, ["MIT"]},
   {links, [{"Github", "https://github.com/davecaos/minmay"}]},
   {build_tools, ["erlang.mk"]}
  ]
