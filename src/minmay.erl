@@ -8,7 +8,6 @@
 -export([extensions/0]).
 -export([mime_types/0]).
 
-
 start() ->
   {ok, _Started} = application:ensure_all_started(minmay),
   ok = load_ets(extensions),
@@ -680,3 +679,4 @@ mime_types() ->
       {<<"video/x-ms-asf">>, <<".asf">>},
       {<<"x-world/x-vrml">>, <<".xof">>} 
       ].
+
