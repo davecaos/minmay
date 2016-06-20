@@ -2,9 +2,9 @@
 Minmay is an Erlang library for mapping a file extention to MIME type or vice versa
 
 It was based in  [@samuelneff's](https://github.com/samuelneff/) [MimeTypeMap](https://github.com/samuelneff/MimeTypeMap)
-
+---------
 Example:
-``` 
+```erlang
 Eshell V7.0  (abort with ^G)
 1>  minmay:start().
 ok
