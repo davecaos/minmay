@@ -7,7 +7,10 @@
         , init_per_testcase/2
         ]).
 
--export([linear_test/1, ramdon_test/1]).
+-export([ linear_test_extensions/1
+        , ramdon_test_mime_types/1
+        , ramdon_test_extensions/1
+        , linear_test_mime_types/1]).
 
 -type config() :: [{atom(), term()}].
 
@@ -17,14 +20,22 @@
 
 -spec all() -> [atom()].
 all() ->
-  [linear_test, ramdon_test].
+  [ linear_test_extensions
+  , ramdon_test_mime_types
+  , ramdon_test_extensions
+  , linear_test_mime_types
+  ].
 
 -spec init_per_suite(config()) -> config().
 init_per_suite(Config) ->
-  ok = minmay:start(),
   Config.
 
 init_per_testcase(_, Config) ->
+  ok = minmay:start(),
+  Config.
+
+end_per_testcase(_, Config) ->
+  ok = minmay:start(),
   Config.
 
 -spec end_per_suite(config()) -> config().
@@ -35,27 +46,52 @@ end_per_suite(Config) ->
 %%% Exported Tests Functions
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
--spec linear_test(config()) -> _.
-linear_test(_Config) ->
-  ExtensionsKV = minmay:extensions(),
-  Extensions = lists:map(fun({Extension, _})-> Extension end, ExtensionsKV),
-  ExtensionsLen = size(Extensions),
+-spec linear_test_extensions(config()) -> config().
+linear_test_extensions(_Config) ->
+  ExtensionsKV  = minmay:extensions(),
+  Extensions    = lists:map(fun({Extension, _})-> Extension end, ExtensionsKV),
   FunMatch =
     fun(Extension) -> 
-      proplists:get_value(Extension, ExtensionsKV) = minmay:get_extension(Extension)
+      MimeType = proplists:get_value(Extension, ExtensionsKV),
+      MimeType = minmay:get_mime_type(Extension)
     end,
-  lists:map(FunMatch, Extension),
+  lists:map(FunMatch, Extensions),
   {comment, ""}.
 
--spec ramdon_test(config()) -> _.
-ramdon_test(_Config) ->
-  ExtensionsKV = minmay:extensions(),
-  ExtensionsLen = size(ExtensionsKV),
+-spec linear_test_mime_types(config()) -> config().
+linear_test_mime_types(_Config) ->
+  MimeTypesKV  = minmay:mime_types(),
+  MimeTypes    = lists:map(fun({MimeType, _})-> MimeType end,  MimeTypesKV),
+  FunMatch =
+    fun(MimeType) -> 
+      Extension = proplists:get_value(MimeType, MimeTypesKV),
+      Extension = minmay:get_extension(MimeType)
+    end,
+  lists:map(FunMatch, MimeTypes),
+  {comment, ""}.
+
+-spec ramdon_test_extensions(config()) -> config().
+ramdon_test_extensions(_Config) ->
+  ExtensionsKV  = minmay:extensions(),
+  ExtensionsLen = length(ExtensionsKV),
   RamdonIndexes = [random:uniform(ExtensionsLen) || _ <- lists:seq(1, 10000)],
   FunMatch =
     fun(Index) -> 
-      {Extension, MimeType} = lists:nth(Index, ExtensionsKV)
-      MimeType = minmay:get_extension(Extension)
+      {Extension, MimeType} = lists:nth(Index, ExtensionsKV),
+      MimeType = minmay:get_mime_type(Extension)
     end,
-  lists:map(FunMatch, Extension),
+  lists:map(FunMatch, RamdonIndexes),
+  {comment, ""}.
+
+-spec ramdon_test_mime_types(config()) -> config().
+ramdon_test_mime_types(_Config) ->
+  MimeTipesKV    = minmay:mime_types(),
+  MimeTipesKVLen = length(MimeTipesKV),
+  RamdonIndexes  = [random:uniform(MimeTipesKVLen) || _ <- lists:seq(1, 10000)],
+  FunMatch =
+    fun(Index) -> 
+      {MimeType, Extension} = lists:nth(Index, MimeTipesKV),
+      Extension = minmay:get_extension(MimeType)
+    end,
+  lists:map(FunMatch, RamdonIndexes),
   {comment, ""}.

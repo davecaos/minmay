@@ -2,4 +2,7 @@ PROJECT = minmay
 
 include erlang.mk
 
-SHELL_OPTS = -name ${PROJECT}@`hostname` -s ${PROJECT} -config rel/sys.config
+TEST_ERLC_OPTS += +debug_info
+CT_OPTS += -cover test/cover.spec -vvv -erl_args -boot start_sasl 
+
+SHELL_OPTS = -name ${PROJECT}@`hostname` -s ${PROJECT}

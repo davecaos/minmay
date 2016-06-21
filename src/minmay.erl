@@ -8,28 +8,34 @@
 -export([extensions/0]).
 -export([mime_types/0]).
 
+
+-type extension() :: binary().
+-type mime_type() :: binary().
+
 start() ->
   {ok, _Started} = application:ensure_all_started(minmay),
-  ok = load_ets(extensions),
-  ok = load_ets(mime_types).
+  ok = populate_ets(extensions),
+  ok = populate_ets(mime_types).
 
 stop() ->
   true = ets:delete(extensions),
   true = ets:delete(mime_types),
   ok.
 
+-spec get_mime_type(flie:filename() | extension()) -> mime_type().
 get_mime_type(FileName) ->
   FileExtension = filename:extension(FileName),
-  [{_FileExtension, MimeType}] = ets:lookup(extensions, FileExtension),
+  [{FileExtension, MimeType}] = ets:lookup(extensions, FileExtension),
   MimeType.
 
+-spec get_extension(mime_type()) -> extension().
 get_extension(MimeType) ->
   [{MimeType, FileExtension}] = ets:lookup(mime_types, MimeType),
   FileExtension.
 
-load_ets(EtsName) ->
-  EtsName = ets:new(EtsName, [set, named_table, protected]),
-  true = ets:insert(EtsName, minmay:EtsName()),
+populate_ets(EtsTableName) ->
+  EtsTableName = ets:new(EtsTableName, [set, named_table, protected]),
+  true = ets:insert(EtsTableName, minmay:EtsTableName()),
   ok.
 
 extensions() ->
@@ -66,7 +72,7 @@ extensions() ->
       {<<".aif">>, <<"audio/aiff">>},
       {<<".aifc">>, <<"audio/aiff">>},
       {<<".aiff">>, <<"audio/aiff">>},
-      {<<".airvnd.adobe.air-application-installer-package+zip">>},
+      {<<".air">>, <<"application/vnd.adobe.air-application-installer-package+zip">>},
       {<<".amc">>, <<"application/mpeg">>},
       {<<".anx">>, <<"application/annodex">>},
       {<<".apk">>, <<"application/vnd.android.package-archive">>},
@@ -112,7 +118,7 @@ extensions() ->
       {<<".cmx">>, <<"image/x-cmx">>},
       {<<".cnf">>, <<"text/plain">>},
       {<<".cod">>, <<"image/cis-cod">>},
-      {<<".config">>, <<"application/xml">>},
+      %% {<<".config">>, <<"application/xml">>},
       {<<".contact">>, <<"text/x-ms-contact">>},
       {<<".coverage">>, <<"application/xml">>},
       {<<".cpio">>, <<"application/x-cpio">>},
@@ -142,7 +148,7 @@ extensions() ->
       {<<".disco">>, <<"text/xml">>},
       {<<".divx">>, <<"video/divx">>},
       {<<".dll">>, <<"application/x-msdownload">>},
-      {<<".dll.config">>, <<"text/xml">>},
+      %% {<<".dll.config">>, <<"text/xml">>},
       {<<".dlm">>, <<"text/dlm">>},
       {<<".doc">>, <<"application/msword">>},
       {<<".docm">>, <<"application/vnd.ms-word.document.macroEnabled.12">>},
@@ -153,7 +159,7 @@ extensions() ->
       {<<".dsp">>, <<"application/octet-stream">>},
       {<<".dsw">>, <<"text/plain">>},
       {<<".dtd">>, <<"text/xml">>},
-      {<<".dtsConfig">>, <<"text/xml">>},
+      %% {<<".dtsConfig">>, <<"text/xml">>},
       {<<".dv">>, <<"video/x-dv">>},
       {<<".dvi">>, <<"application/x-dvi">>},
       {<<".dwf">>, <<"drawing/x-dwf">>},
@@ -167,7 +173,7 @@ extensions() ->
       {<<".etx">>, <<"text/x-setext">>},
       {<<".evy">>, <<"application/envoy">>},
       {<<".exe">>, <<"application/octet-stream">>},
-      {<<".exe.config">>, <<"text/xml">>},
+      %% {<<".exe.config">>, <<"text/xml">>},
       {<<".fdf">>, <<"application/vnd.fdf">>},
       {<<".fif">>, <<"application/fractals">>},
       {<<".filters">>, <<"application/xml">>},
