@@ -1,7 +1,11 @@
 # minmay
+
 Minmay is an Erlang library for mapping a file extention to MIME type or vice versa
 
-It was based in  [@samuelneff's](https://github.com/samuelneff/) [MimeTypeMap](https://github.com/samuelneff/MimeTypeMap)
+The conversion proplist is cached using two [ETS tables](http://learnyousomeerlang.com/ets) (extensions and mime_types)
+
+It was based in [@samuelneff's](https://github.com/samuelneff/) [MimeTypeMap](https://github.com/samuelneff/MimeTypeMap)
+
 ---------
 Example:
 ```erlang
