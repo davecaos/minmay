@@ -10,7 +10,9 @@
 -export([ linear_test_extensions/1
         , ramdon_test_mime_types/1
         , ramdon_test_extensions/1
-        , linear_test_mime_types/1]).
+        , ramdon_test_filenames/1
+        , linear_test_mime_types/1
+        , linear_test_filenames/1]).
 
 -type config() :: [{atom(), term()}].
 
@@ -23,7 +25,9 @@ all() ->
   [ linear_test_extensions
   , ramdon_test_mime_types
   , ramdon_test_extensions
+  , ramdon_test_filenames
   , linear_test_mime_types
+  , linear_test_filenames
   ].
 
 -spec init_per_suite(config()) -> config().
@@ -35,7 +39,7 @@ init_per_testcase(_, Config) ->
   Config.
 
 end_per_testcase(_, Config) ->
-  ok = minmay:start(),
+  ok = minmay:stop(),
   Config.
 
 -spec end_per_suite(config()) -> config().
@@ -53,7 +57,19 @@ linear_test_extensions(_Config) ->
   FunMatch =
     fun(Extension) -> 
       MimeType = proplists:get_value(Extension, ExtensionsKV),
-      MimeType = minmay:get_mime_type(Extension)
+      MimeType = minmay:from_extension(Extension)
+    end,
+  lists:map(FunMatch, Extensions),
+  {comment, ""}.
+
+-spec linear_test_filenames(config()) -> config().
+linear_test_filenames(_Config) ->
+  ExtensionsKV  = minmay:extensions(),
+  Extensions    = lists:map(fun({Extension, _})-> Extension end, ExtensionsKV),
+  FunMatch =
+    fun(Extension) -> 
+      MimeType = proplists:get_value(Extension, ExtensionsKV),
+      MimeType = minmay:from_filename("dummmy_filename" ++ Extension)
     end,
   lists:map(FunMatch, Extensions),
   {comment, ""}.
@@ -65,7 +81,7 @@ linear_test_mime_types(_Config) ->
   FunMatch =
     fun(MimeType) -> 
       Extension = proplists:get_value(MimeType, MimeTypesKV),
-      Extension = minmay:get_extension(MimeType)
+      Extension = minmay:from_mime_type(MimeType)
     end,
   lists:map(FunMatch, MimeTypes),
   {comment, ""}.
@@ -78,7 +94,20 @@ ramdon_test_extensions(_Config) ->
   FunMatch =
     fun(Index) -> 
       {Extension, MimeType} = lists:nth(Index, ExtensionsKV),
-      MimeType = minmay:get_mime_type(Extension)
+      MimeType = minmay:from_extension(Extension)
+    end,
+  lists:map(FunMatch, RamdonIndexes),
+  {comment, ""}.
+
+-spec ramdon_test_filenames(config()) -> config().
+ramdon_test_filenames(_Config) ->
+  ExtensionsKV  = minmay:extensions(),
+  ExtensionsLen = length(ExtensionsKV),
+  RamdonIndexes = [random:uniform(ExtensionsLen) || _ <- lists:seq(1, 10000)],
+  FunMatch =
+    fun(Index) -> 
+      {Extension, MimeType} = lists:nth(Index, ExtensionsKV),
+      MimeType = minmay:from_filename( "dummmy_filename" ++ Extension)
     end,
   lists:map(FunMatch, RamdonIndexes),
   {comment, ""}.
@@ -91,7 +120,7 @@ ramdon_test_mime_types(_Config) ->
   FunMatch =
     fun(Index) -> 
       {MimeType, Extension} = lists:nth(Index, MimeTipesKV),
-      Extension = minmay:get_extension(MimeType)
+      Extension = minmay:from_mime_type(MimeType)
     end,
   lists:map(FunMatch, RamdonIndexes),
   {comment, ""}.
