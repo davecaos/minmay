@@ -12,10 +12,12 @@ Example:
 Eshell V7.0  (abort with ^G)
 1>  minmay:start().
 ok
-2> minmay:get_mime_type(<<"vacations.jpg">>).
-<<"image/jpeg">>
-3> minmay:get_extension(<<"image/jpeg">>).
-<<".jpg">>
+2> minmay:from_extension(".jpg").
+"image/jpeg" 
+2> minmay:from_filename("vacations.jpg").
+"image/jpeg"
+3> minmay:from_mime_type("image/jpeg").
+"vacations.jpg"
 4> minmay:stop().
 ok
    
