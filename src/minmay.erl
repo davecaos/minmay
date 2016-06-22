@@ -8,15 +8,16 @@
 -export([extensions/0]).
 -export([mime_types/0]).
 
-
 -type extension() :: binary().
 -type mime_type() :: binary().
 
+-spec start() -> ok.
 start() ->
   {ok, _Started} = application:ensure_all_started(minmay),
   ok = populate_ets(extensions),
   ok = populate_ets(mime_types).
 
+-spec stop() -> ok.
 stop() ->
   true = ets:delete(extensions),
   true = ets:delete(mime_types),
@@ -38,6 +39,7 @@ populate_ets(EtsTableName) ->
   true = ets:insert(EtsTableName, minmay:EtsTableName()),
   ok.
 
+-spec extensions() -> [{extension(), mime_type()}].
 extensions() ->
     [
       {<<".323">>, <<"text/h323">>},
@@ -636,6 +638,7 @@ extensions() ->
       {<<".zip">>, <<"application/zip">>}
     ].
 
+-spec mime_types() -> [{mime_type(), extension()}].
 mime_types() ->
   [
       {<<"application/fsharp-script">>, <<".fsx">>},
