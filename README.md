@@ -17,7 +17,7 @@ ok
 2> minmay:from_filename("vacations.jpg").
 "image/jpeg"
 3> minmay:from_mime_type("image/jpeg").
-"vacations.jpg"
+".jpg"
 4> minmay:stop().
 ok
    
