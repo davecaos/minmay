@@ -1,5 +1,9 @@
 # minmay
 
+[![Travis](https://img.shields.io/travis/davecaos/minmay.svg?style=flat-square)](https://travis-ci.org/jfacorro/minmay)
+[![Hex.pm](https://img.shields.io/hexpm/v/minmay.svg?style=flat-square)](https://hex.pm/packages/minmay)
+[![Hex.pm](https://img.shields.io/hexpm/dt/minmay.svg?style=flat-square)](https://hex.pm/packages/minmay)
+
 Minmay is an Erlang library for mapping a file extention to MIME type or vice versa
 
 The conversion proplist is cached using two [ETS tables](http://learnyousomeerlang.com/ets) (extensions and mime_types)
