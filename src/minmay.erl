@@ -9,9 +9,9 @@
 -export([extensions/0]).
 -export([mime_types/0]).
 
--type extension() :: binary().
--type mime_type() :: binary().
--type maybe_type(Type) :: Type | undefined.
+-type extension() :: string().
+-type mime_type() :: string().
+-type maybe_something(Type) :: Type | undefined.
 
 -spec start() -> ok.
 start() ->
@@ -25,25 +25,25 @@ stop() ->
   true = ets:delete(mime_types),
   ok.
 
--spec from_filename(file:filename()) -> maybe_type(mime_type()).
+-spec from_filename(file:filename()) -> maybe_something(mime_type()).
 from_filename(FileName) ->
   FileExtension = filename:extension(FileName),
   from_extension(FileExtension).
 
--spec from_extension(extension()) -> maybe_type(mime_type()).
+-spec from_extension(extension()) -> maybe_something(mime_type()).
 from_extension(Extension) ->
   case ets:lookup(extensions, Extension) of
     []                      -> undefined;
     [{Extension, MimeType}] -> MimeType
   end.
 
--spec from_mime_type(mime_type()) -> maybe_type(extension()).
+-spec from_mime_type(mime_type()) -> maybe_something(extension()).
 from_mime_type(MimeType) ->
   case ets:lookup(mime_types, MimeType) of
     []                          -> undefined;
     [{MimeType, FileExtension}] -> FileExtension
   end.
-  
+
 populate_ets(EtsTableName) ->
   EtsTableName = ets:new(EtsTableName, [set, named_table, protected]),
   true = ets:insert(EtsTableName, minmay:EtsTableName()),
@@ -130,7 +130,7 @@ extensions() ->
       {".cmx", "image/x-cmx"},
       {".cnf", "text/plain"},
       {".cod", "image/cis-cod"},
-      %% {".config", "application/xml"},
+      {".config", "application/xml"},
       {".contact", "text/x-ms-contact"},
       {".coverage", "application/xml"},
       {".cpio", "application/x-cpio"},
@@ -160,7 +160,6 @@ extensions() ->
       {".disco", "text/xml"},
       {".divx", "video/divx"},
       {".dll", "application/x-msdownload"},
-      %% {".dll.config", "text/xml"},
       {".dlm", "text/dlm"},
       {".doc", "application/msword"},
       {".docm", "application/vnd.ms-word.document.macroEnabled.12"},
@@ -171,7 +170,7 @@ extensions() ->
       {".dsp", "application/octet-stream"},
       {".dsw", "text/plain"},
       {".dtd", "text/xml"},
-      %% {".dtsConfig", "text/xml"},
+      {".dtsConfig", "text/xml"},
       {".dv", "video/x-dv"},
       {".dvi", "application/x-dvi"},
       {".dwf", "drawing/x-dwf"},
@@ -185,7 +184,6 @@ extensions() ->
       {".etx", "text/x-setext"},
       {".evy", "application/envoy"},
       {".exe", "application/octet-stream"},
-      %% {".exe.config", "text/xml"},
       {".fdf", "application/vnd.fdf"},
       {".fif", "application/fractals"},
       {".filters", "application/xml"},
