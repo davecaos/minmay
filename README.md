@@ -1,6 +1,6 @@
 # minmay
 
-[![Travis](https://img.shields.io/travis/davecaos/minmay.svg?style=flat-square)](https://travis-ci.org/jfacorro/minmay)
+[![Travis](https://img.shields.io/travis/davecaos/minmay.svg?style=flat-square)](https://travis-ci.org/davecaos/minmay)
 [![Hex.pm](https://img.shields.io/hexpm/v/minmay.svg?style=flat-square)](https://hex.pm/packages/minmay)
 [![Hex.pm](https://img.shields.io/hexpm/dt/minmay.svg?style=flat-square)](https://hex.pm/packages/minmay)
 
