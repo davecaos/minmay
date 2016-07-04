@@ -9,6 +9,6 @@
   {maintainers, ["davecaos"]},
   {licenses, ["MIT"]},
   {links, [{"Github", "https://github.com/davecaos/minmay"}]},
-  {build_tools, ["erlang.mk", "rebar"]}
+  {build_tools, ["makefile", "rebar"]}
  ]
 }.
