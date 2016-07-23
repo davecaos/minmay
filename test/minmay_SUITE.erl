@@ -1,6 +1,10 @@
 
 -module(minmay_SUITE).
 
+-author("David Cesar Hernan Cao <david.c.h.cao@gmail.com>").
+-github("https://github.com/davecaos").
+-license("MIT").
+
 -export([ all/0
         , init_per_suite/1
         , end_per_suite/1
