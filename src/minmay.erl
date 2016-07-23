@@ -1,5 +1,9 @@
 -module(minmay).
 
+-author("David Cesar Hernan Cao <david.c.h.cao@gmail.com>").
+-github("https://github.com/davecaos").
+-license("MIT").
+
 -export([start/0, stop/0]).
 
 -export([from_filename/1]).
@@ -45,7 +49,8 @@ from_mime_type(MimeType) ->
   end.
 
 populate_ets(EtsTableName) ->
-  EtsTableName = ets:new(EtsTableName, [set, named_table, protected]),
+  Options = [set, named_table, {read_concurrency, true}, {write_concurrency, false}, protected],
+  EtsTableName = ets:new(EtsTableName, Options),
   true = ets:insert(EtsTableName, minmay:EtsTableName()),
   ok.
 
