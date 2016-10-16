@@ -2,7 +2,7 @@
  [
   {description,
    "Minmay is a Erlang library for translating a file extention to MIME type or vice versa"},
-  {vsn, "1.0.3"},
+  {vsn, "1.1.0"},
   {applications, [kernel, stdlib]},
   {modules, []},
   {registered, []},
