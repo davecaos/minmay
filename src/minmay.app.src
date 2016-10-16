@@ -6,9 +6,20 @@
   {applications, [kernel, stdlib]},
   {modules, []},
   {registered, []},
+  {files, [ "src/*"
+          , "include/*"
+          , "lib/*"
+          , "Makefile"
+          , "erlang.mk"
+          , "README.md"
+          , "rebar.config"
+          , "rebar.lock"
+          , "mix.exs"
+          , "mix.lock"
+          ]},
   {maintainers, ["David Cesar Hernan Cao"]},
   {licenses, ["MIT"]},
   {links, [{"Github", "https://github.com/davecaos/minmay"}]},
-  {build_tools, ["make", "rebar3"]}
+  {build_tools, ["make", "rebar3", "mix"]}
  ]
 }.
