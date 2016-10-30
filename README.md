@@ -7,7 +7,7 @@
 
 ![GIF](http://1.bp.blogspot.com/-yHRkA0tfIds/T8--B9NF1bI/AAAAAAAAC9k/_XLHURp5BeE/s1600/Lynn+Minmay+-+Shao+Pai+Ron.gif)
 
-Minmay is an Erlang library for mapping a file extention to MIME type or vice versa
+Minmay is an Erlang/Elixir library for mapping a file extention to MIME type or vice versa
 
 The conversion proplist is cached using two [ETS tables](http://learnyousomeerlang.com/ets) (extensions and mime_types)
 
