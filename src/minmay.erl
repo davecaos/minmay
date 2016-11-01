@@ -1,10 +1,12 @@
 -module(minmay).
 
+-behaviour(application).
+
 -author("David Cesar Hernan Cao <david.c.h.cao@gmail.com>").
 -github("https://github.com/davecaos").
 -license("MIT").
 
--export([start/0, stop/0]).
+-export([start/0, start/2, stop/0, stop/1]).
 
 -export([from_filename/1]).
 -export([from_extension/1]).
@@ -23,11 +25,19 @@ start() ->
   ok = populate_ets(extensions),
   ok = populate_ets(mime_types).
 
+-spec start(application:start_type(), any()) -> ok.
+start(_Type, _Args) ->
+  start().
+
 -spec stop() -> ok.
 stop() ->
   true = ets:delete(extensions),
   true = ets:delete(mime_types),
   ok.
+
+-spec stop(atom()) -> ok.
+stop(_State) ->
+  stop().
 
 -spec from_filename(file:filename()) -> maybe_something(mime_type()).
 from_filename(FileName) ->

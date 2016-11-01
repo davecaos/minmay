@@ -6,8 +6,14 @@ defmodule Minmay do
   def unquote(:"start")() do
     :erlang.apply(:"minmay", :"start", [])
   end
+  def unquote(:"start")(arg1, arg2) do
+    :erlang.apply(:"minmay", :"start", [arg1, arg2])
+  end
   def unquote(:"stop")() do
     :erlang.apply(:"minmay", :"stop", [])
+  end
+  def unquote(:"stop")(arg1) do
+    :erlang.apply(:"minmay", :"stop", [arg1])
   end
   def unquote(:"from_filename")(arg1) do
     :erlang.apply(:"minmay", :"from_filename", [arg1])
