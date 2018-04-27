@@ -9,34 +9,38 @@
 
 Minmay is an Erlang/Elixir application for mapping a file extention to MIME type or vice versa
 
-The conversion proplist is cached using two [ETS tables](http://learnyousomeerlang.com/ets) (extensions and mime_types)
+The conversion proplist is cached with [:zap::earth_americas: Jiffy Globlal](https://github.com/davecaos/jiffy_global)
 
 It was based in [@samuelneff's](https://github.com/samuelneff/) [MimeTypeMap](https://github.com/samuelneff/MimeTypeMap)
 
 ---------
 Erlang Example:
 ```erlang
-Eshell V7.0  (abort with ^G)
+Erlang/OTP 20 [erts-9.3] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:0] [hipe] [kernel-poll:false] [dtrace]
+Eshell V9.3  (abort with ^G)
 1>  minmay:start().
 ok
-2> minmay:from_extension(".jpg").
-"image/jpeg" 
+2> minmay:from_extension("jpg").
+"image/jpeg"
 2> minmay:from_filename("vacations.jpg").
 "image/jpeg"
 3> minmay:from_mime_type("image/jpeg").
 ".jpg"
 4> minmay:stop().
 ok
-   
+
 ```
 
 ---------
 Elixir Example:
 ```elixir
-Interactive Elixir (1.3.0) - press Ctrl+C to exit (type h() ENTER for help)
+$>iex -S mix
+Erlang/OTP 20 [erts-9.3] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
+
+Interactive Elixir (1.5.2) - press Ctrl+C to exit (type h() ENTER for help)
 iex(1)> Minmay.start()
 :ok
-iex(2)> Minmay.from_extension('.jpg')
+iex(2)> Minmay.from_extension('jpg')
 'image/jpeg'
 iex(3)> Minmay.from_filename('vacations.jpg')
 'image/jpeg'
@@ -44,5 +48,5 @@ iex(4)> Minmay.from_mime_type('image/jpeg')
 '.jpg'
 iex(6)> Minmay.stop()
 :ok
-   
+
 ```

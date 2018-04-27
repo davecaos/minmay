@@ -2,7 +2,7 @@
  [
   {description,
    "Minmay is a Erlang application for translating a file extention to MIME type or vice versa"},
-  {vsn, "1.2.0"},
+  {vsn, "2.2.0"},
   {applications, [kernel, stdlib]},
   {modules, []},
   {registered, []},
