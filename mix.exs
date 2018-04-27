@@ -4,12 +4,12 @@ defmodule Minmay.Mixfile do
   def project do
     [
       app: :minmay,
-      version: "1.1.0",
-      elixir: "~> 1.2",
+      version: "2.2.0",
+      elixir: "~> 1.5",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
-      deps: deps,
-      aliases: aliases
+      deps: deps(),
+      aliases: aliases()
     ]
   end
 
@@ -21,7 +21,8 @@ defmodule Minmay.Mixfile do
   end
 
   defp deps do
-    [    
+    [
+      {:jiffy_global, git: "https://github.com/davecaos/jiffy_global", branch: "master"}
     ]
   end
 
@@ -44,10 +45,10 @@ defmodule Minmay.Mixfile do
     for command <- commands, do: (fn
       ({regex, cmd}) ->
          if Regex.match?(Regex.compile!(regex), Atom.to_string(os)) do
-           Mix.Shell.cmd cmd, [], fn(x) -> Mix.Shell.IO.info(String.strip(x)) end
+           Mix.Shell.cmd cmd, [], fn(x) -> Mix.Shell.IO.info(String.trim(x)) end
          end
       (cmd) ->
-        Mix.Shell.cmd cmd, [], fn(x) -> Mix.Shell.IO.info(String.strip(x)) end
+        Mix.Shell.cmd cmd, [], fn(x) -> Mix.Shell.IO.info(String.trim(x)) end
       end).(command)
-  end    
+  end
 end

@@ -92,12 +92,14 @@ linear_test_mime_types(_Config) ->
 
 -spec ramdon_test_extensions(config()) -> config().
 ramdon_test_extensions(_Config) ->
-  ExtensionsKV  = minmay:extensions(),
-  ExtensionsLen = length(ExtensionsKV),
-  RamdonIndexes = [random:uniform(ExtensionsLen) || _ <- lists:seq(1, 1000000 )],
+  ExtensionsKV    = minmay:extensions(),
+  ExtensionsLen   = length(ExtensionsKV),
+  IndexList       = lists:zip( lists:seq(1, ExtensionsLen), ExtensionsKV ),
+  MapExtensionsKV = maps:from_list(IndexList),
+  RamdonIndexes   = for(100000, ExtensionsLen),
   FunMatch =
     fun(Index) ->
-      {Extension, MimeType} = lists:nth(Index, ExtensionsKV),
+      {Extension, MimeType} = maps:get(Index, MapExtensionsKV),
       MimeType = minmay:from_extension(Extension)
     end,
   lists:map(FunMatch, RamdonIndexes),
@@ -105,12 +107,14 @@ ramdon_test_extensions(_Config) ->
 
 -spec ramdon_test_filenames(config()) -> config().
 ramdon_test_filenames(_Config) ->
-  ExtensionsKV  = minmay:extensions(),
-  ExtensionsLen = length(ExtensionsKV),
-  RamdonIndexes = [random:uniform(ExtensionsLen) || _ <- lists:seq(1, 1000000 )],
+  ExtensionsKV    = minmay:extensions(),
+  ExtensionsLen   = length(ExtensionsKV),
+  IndexList       = lists:zip( lists:seq(1, ExtensionsLen), ExtensionsKV ),
+  MapExtensionsKV = maps:from_list(IndexList),
+  RamdonIndexes   = for(100000, ExtensionsLen),
   FunMatch =
     fun(Index) ->
-      {Extension, MimeType} = lists:nth(Index, ExtensionsKV),
+      {Extension, MimeType} = maps:get(Index, MapExtensionsKV),
       MimeType = minmay:from_filename( "dummmy_filename." ++ Extension)
     end,
   lists:map(FunMatch, RamdonIndexes),
@@ -120,11 +124,19 @@ ramdon_test_filenames(_Config) ->
 ramdon_test_mime_types(_Config) ->
   MimeTipesKV    = minmay:mime_types(),
   MimeTipesKVLen = length(MimeTipesKV),
-  RamdonIndexes  = [random:uniform(MimeTipesKVLen) || _ <- lists:seq(1, 1000000 )],
+  IndexList      = lists:zip( lists:seq(1, MimeTipesKVLen), MimeTipesKV ),
+  MapMimeTipesKV = maps:from_list(IndexList),
+  RamdonIndexes  = for(100000, MimeTipesKVLen),
   FunMatch =
     fun(Index) ->
-      {MimeType, Extension} = lists:nth(Index, MimeTipesKV),
+      {MimeType, Extension} = maps:get(Index, MapMimeTipesKV),
       Extension = minmay:from_mime_type(MimeType)
     end,
   lists:map(FunMatch, RamdonIndexes),
   {comment, ""}.
+
+for(0, _Range) ->
+   [];
+for(N,Range) when N > 0 ->
+   Random = random:uniform(Range),
+   [Random | for(N-1,Range)].
