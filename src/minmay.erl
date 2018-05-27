@@ -24,7 +24,7 @@
 
 -spec start() -> ok.
 start() ->
-  {ok, _Started} = application:ensure_all_started(minmay),
+  {ok, _Started} =      application:ensure_all_started(minmay),
   ok = populate_ets(extensions),
   ok = populate_ets(mime_types).
 
