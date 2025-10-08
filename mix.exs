@@ -4,50 +4,27 @@ defmodule Minmay.Mixfile do
   def project do
     [
       app: :minmay,
-      version: "1.1.0",
-      elixir: "~> 1.2",
-      build_embedded: Mix.env == :prod,
-      start_permanent: Mix.env == :prod,
-      deps: deps,
-      aliases: aliases
+      version: "1.2.0",
+      elixir: "~> 1.14",
+      start_permanent: Mix.env() == :prod,
+      description: "MIME type lookup: translate a file extension to MIME type or vice versa",
+      package: package(),
+      deps: deps()
     ]
   end
 
   def application do
-    [
-       applications: [],
-       env: []
-    ]
+    [mod: {Minmay.Application, []}, extra_applications: [:logger]]
   end
 
   defp deps do
-    [    
+    [{:ex_doc, "~> 0.30", only: :dev, runtime: false}]
+  end
+
+  defp package do
+    [
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/davecaos/minmay"}
     ]
   end
-
-  defp aliases do
-    [compile: [&pre_compile_hooks/1, "compile", &post_compile_hooks/1]]
-  end
-
-  defp pre_compile_hooks(_) do
-    run_hook_cmd [
-    ]
-  end
-
-  defp post_compile_hooks(_) do
-    run_hook_cmd [
-    ]
-  end
-
-  defp run_hook_cmd(commands) do
-    {_, os} = :os.type
-    for command <- commands, do: (fn
-      ({regex, cmd}) ->
-         if Regex.match?(Regex.compile!(regex), Atom.to_string(os)) do
-           Mix.Shell.cmd cmd, [], fn(x) -> Mix.Shell.IO.info(String.strip(x)) end
-         end
-      (cmd) ->
-        Mix.Shell.cmd cmd, [], fn(x) -> Mix.Shell.IO.info(String.strip(x)) end
-      end).(command)
-  end    
 end
