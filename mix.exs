@@ -4,7 +4,7 @@ defmodule Minmay.Mixfile do
   def project do
     [
       app: :minmay,
-      version: "1.2.0",
+      version: "2.0.0",
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
       description: "MIME type lookup: translate a file extension to MIME type or vice versa",
@@ -24,7 +24,8 @@ defmodule Minmay.Mixfile do
   defp package do
     [
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/davecaos/minmay"}
+      links: %{"GitHub" => "https://github.com/davecaos/minmay"},
+      files: ~w(lib mix.exs README.md LICENSE)
     ]
   end
 end
