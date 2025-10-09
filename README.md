@@ -16,7 +16,7 @@ Add `minmay` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:minmay, "~> 1.2"}]
+  [{:minmay, "~> 2.0"}]
 end
 ```
 
