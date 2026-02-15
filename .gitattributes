@@ -1,0 +1,10 @@
+# Tell GitHub Linguist to classify this as an Elixir project
+# Exclude Erlang files from language statistics
+src/*.erl linguist-vendored
+*.mk linguist-vendored
+rebar.config linguist-vendored
+rebar.lock linguist-vendored
+
+# Ensure Elixir files are detected
+*.ex linguist-language=Elixir
+*.exs linguist-language=Elixir
