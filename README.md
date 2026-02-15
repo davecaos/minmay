@@ -14,23 +14,6 @@ The conversion proplist is cached using two [ETS tables](http://learnyousomeerla
 It was based in [@samuelneff's](https://github.com/samuelneff/) [MimeTypeMap](https://github.com/samuelneff/MimeTypeMap)
 
 ---------
-Erlang Example:
-```erlang
-Eshell V7.0  (abort with ^G)
-1>  minmay:start().
-ok
-2> minmay:from_extension(".jpg").
-"image/jpeg" 
-2> minmay:from_filename("vacations.jpg").
-"image/jpeg"
-3> minmay:from_mime_type("image/jpeg").
-".jpg"
-4> minmay:stop().
-ok
-   
-```
-
----------
 Elixir Example:
 ```elixir
 Interactive Elixir (1.3.0) - press Ctrl+C to exit (type h() ENTER for help)
@@ -44,5 +27,20 @@ iex(4)> Minmay.from_mime_type('image/jpeg')
 '.jpg'
 iex(6)> Minmay.stop()
 :ok
+
+---------```
+Erlang Example:
+```erlang
+Eshell V7.0  (abort with ^G)
+1>  minmay:start().
+ok
+2> minmay:from_extension(".jpg").
+"image/jpeg" 
+2> minmay:from_filename("vacations.jpg").
+"image/jpeg"
+3> minmay:from_mime_type("image/jpeg").
+".jpg"
+4> minmay:stop().
+ok
    
 ```

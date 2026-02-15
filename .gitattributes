@@ -8,3 +8,4 @@ rebar.lock linguist-vendored
 # Ensure Elixir files are detected
 *.ex linguist-language=Elixir
 *.exs linguist-language=Elixir
+
